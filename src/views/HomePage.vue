@@ -1,56 +1,63 @@
 <template>
   <ion-page>
     <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-title>Blank</ion-title>
+      <ion-toolbar color="primary">
+        <ion-title>Ma météo</ion-title>
       </ion-toolbar>
     </ion-header>
-
+    
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Blank</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
-      <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <div class="div1">
+        <p>{{ formattedDate }}</p>
+        <!-- <p>Samedi, 25 Novembre 2023</p> -->
+        <ion-item>
+          <ion-select label="Ville" placeholder="Choisir">
+            <ion-select-option value="apple">Montréal</ion-select-option>
+            <ion-select-option value="banana">Québec</ion-select-option>
+            <ion-select-option value="orange">Laval</ion-select-option>
+            <ion-select-option value="orange">Position actuelle</ion-select-option>
+          </ion-select>
+        </ion-item>
       </div>
     </ion-content>
+
+    <ion-footer>
+        <ion-toolbar color="primary">
+          <ion-title>&copy; Nathan Kalala</ion-title>
+        </ion-toolbar>
+      </ion-footer>
   </ion-page>
 </template>
 
-<script setup lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+<script setup>
+import { 
+  IonContent, IonHeader, IonPage, IonTitle, 
+  IonToolbar, IonCard, IonItem, IonSelect, IonSelectOption
+} from '@ionic/vue';
+
+function getFrenchFormattedDate(date) {
+  if (!(date instanceof Date) || isNaN(date)) {
+    date = new Date();
+  }
+
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
+
+  const formatter = new Intl.DateTimeFormat('fr-FR', options);
+
+  return formatter.format(date);
+}
+
+const currentDate = new Date();
+const formattedDate = getFrenchFormattedDate(currentDate);
 </script>
 
 <style scoped>
-#container {
-  text-align: center;
-  
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  
-  color: #8c8c8c;
-  
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
+  .div1 {
+    text-align: center;
+  }
 </style>
