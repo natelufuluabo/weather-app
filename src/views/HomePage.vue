@@ -9,9 +9,8 @@
     <ion-content :fullscreen="true">
       <div class="div1">
         <p>{{ formattedDate }}</p>
-        <!-- <p>Samedi, 25 Novembre 2023</p> -->
         <ion-item>
-          <ion-select label="Ville" placeholder="Choisir">
+          <ion-select label="Ville" v-model="location" placeholder="Choisir">
             <ion-select-option value="apple">Montréal</ion-select-option>
             <ion-select-option value="banana">Québec</ion-select-option>
             <ion-select-option value="orange">Laval</ion-select-option>
@@ -34,6 +33,9 @@ import {
   IonContent, IonHeader, IonPage, IonTitle, 
   IonToolbar, IonCard, IonItem, IonSelect, IonSelectOption
 } from '@ionic/vue';
+import { ref } from 'vue'
+
+const location = ref('')
 
 function getFrenchFormattedDate(date) {
   if (!(date instanceof Date) || isNaN(date)) {
