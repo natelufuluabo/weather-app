@@ -8,15 +8,22 @@
     
     <ion-content :fullscreen="true">
       <div class="div1">
-        <p>{{ formattedDate }}</p>
+        <p>{{ getFrenchFormattedDate() }}</p>
         <ion-item>
-          <ion-select label="Ville" v-model="location" placeholder="Choisir">
-            <ion-select-option value="apple">Montréal</ion-select-option>
-            <ion-select-option value="banana">Québec</ion-select-option>
-            <ion-select-option value="orange">Laval</ion-select-option>
-            <ion-select-option value="orange">Position actuelle</ion-select-option>
+          <ion-select label="Ville" v-model="userChoice" 
+            @ionChange="handleChange(userChoice, cityCoordinates, location)" placeholder="Choisir">
+            <ion-select-option value="Montréal">Montréal</ion-select-option>
+            <ion-select-option value="Québec">Québec</ion-select-option>
+            <ion-select-option value="Laval">Laval</ion-select-option>
+            <ion-select-option value="Position actuelle">Position actuelle</ion-select-option>
           </ion-select>
         </ion-item>
+      </div>
+
+      <div>
+        <h1>{{ userChoice }}</h1>
+        <p>{{ location.lat }}</p>
+        <p>{{ location.long }}</p>
       </div>
     </ion-content>
 
@@ -33,29 +40,11 @@ import {
   IonContent, IonHeader, IonPage, IonTitle, 
   IonToolbar, IonCard, IonItem, IonSelect, IonSelectOption
 } from '@ionic/vue';
-import { ref } from 'vue'
+import { ref, reactive } from 'vue';
+import { cityCoordinates, location } from '../store.js';
+import { handleChange, getFrenchFormattedDate } from '../utils.js';
 
-const location = ref('')
-
-function getFrenchFormattedDate(date) {
-  if (!(date instanceof Date) || isNaN(date)) {
-    date = new Date();
-  }
-
-  const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  };
-
-  const formatter = new Intl.DateTimeFormat('fr-FR', options);
-
-  return formatter.format(date);
-}
-
-const currentDate = new Date();
-const formattedDate = getFrenchFormattedDate(currentDate);
+const userChoice = reactive('Position actuelle');
 </script>
 
 <style scoped>
