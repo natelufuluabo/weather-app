@@ -45,7 +45,7 @@ export function getFormattedDate() {
     return formatter.format(date);
 }
 
-async function fetchWeatherData(latitude, longitude) {
+export async function fetchWeatherData(latitude, longitude) {
     try {
         const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1fe2d8d13d2a307d425792b9cbaf9b12`;
         const response = await fetch(url);
@@ -70,4 +70,27 @@ function kelvinToCelsius(tempKelvin) {
     const roundedCelsius = Math.round(tempCelsius);
   
     return roundedCelsius;
+}
+
+export function getUserLocation() {
+    return new Promise((resolve, reject) => {
+        if ('geolocation' in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const userLocation = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+              };
+              resolve(userLocation);
+            },
+            function (error) {
+              console.error('Error getting user location:', error.message);
+              reject(error);
+            }
+          );
+        } else {
+          console.error('Geolocation is not supported by your browser.');
+          reject(new Error('Geolocation is not supported'));
+        }
+    });
 }

@@ -42,12 +42,17 @@
 
 <script setup>
 import { 
-  IonContent, IonHeader, IonPage, IonTitle, IonImg, 
+  IonContent, IonHeader, IonPage, IonTitle, IonImg, onIonViewWillEnter,  
   IonToolbar, IonCard, IonItem, IonSelect, IonSelectOption
 } from '@ionic/vue';
 import { ref, reactive } from 'vue';
 import { cityCoordinates, location, weatherData } from '../store.js';
-import { handleChange, getFormattedDate } from '../utils.js';
+import { handleChange, getFormattedDate, getUserLocation, fetchWeatherData } from '../utils.js';
+
+onIonViewWillEnter(async () => {
+  const userPos = await getUserLocation();
+  await fetchWeatherData(userPos.latitude, userPos.longitude);
+});
 
 const userChoice = reactive('My Location');
 </script>
