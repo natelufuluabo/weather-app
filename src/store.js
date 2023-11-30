@@ -5,6 +5,14 @@ export const location = reactive({
     long: ''
 });
 
+export const weatherData = reactive({
+    icon: '',
+    description: '',
+    temp: '',
+    min_temp: '',
+    max_temp: '',
+});
+
 export const cityCoordinates = reactive({
     montreal: {
         lat: '45.508888',

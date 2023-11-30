@@ -1,3 +1,5 @@
+import { weatherData } from "./store";
+
 export async function handleChange(userChoice, cityCoordinates, location) {
     const { montreal, laval, quebec, currPos } = cityCoordinates;
 
@@ -48,7 +50,12 @@ async function fetchWeatherData(latitude, longitude) {
         const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1fe2d8d13d2a307d425792b9cbaf9b12`;
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data.weather, data.main);
+        weatherData.icon = data.weather[0].icon;
+        weatherData.description = data.weather[0].description;
+        weatherData.temp = kelvinToCelsius(data.main.temp);
+        weatherData.min_temp = kelvinToCelsius(data.main.temp_min);
+        weatherData.max_temp = kelvinToCelsius(data.main.temp_max);
+        console.log(weatherData);
     } catch (error) {
         console.error(error.message);
     }
