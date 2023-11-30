@@ -27,6 +27,7 @@
           <h5>L: {{ weatherData.min_temp }}&deg;</h5>
           <h5>H: {{ weatherData.max_temp }}&deg;</h5>
         </div>
+        <img alt="weather icon" :src="weatherData.icon"/>
         <h4>{{ weatherData.description }}</h4>
       </div>
     </ion-content>
@@ -41,7 +42,7 @@
 
 <script setup>
 import { 
-  IonContent, IonHeader, IonPage, IonTitle, 
+  IonContent, IonHeader, IonPage, IonTitle, IonImg, 
   IonToolbar, IonCard, IonItem, IonSelect, IonSelectOption
 } from '@ionic/vue';
 import { ref, reactive } from 'vue';

@@ -50,7 +50,7 @@ async function fetchWeatherData(latitude, longitude) {
         const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1fe2d8d13d2a307d425792b9cbaf9b12`;
         const response = await fetch(url);
         const data = await response.json();
-        weatherData.icon = data.weather[0].icon;
+        weatherData.icon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
         weatherData.description = data.weather[0].description;
         weatherData.temp = kelvinToCelsius(data.main.temp);
         weatherData.min_temp = kelvinToCelsius(data.main.temp_min);
