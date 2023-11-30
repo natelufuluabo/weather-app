@@ -2,28 +2,32 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar color="primary">
-        <ion-title>Ma météo</ion-title>
+        <ion-title>Weather</ion-title>
       </ion-toolbar>
     </ion-header>
     
     <ion-content :fullscreen="true">
       <div class="div1">
-        <p>{{ getFrenchFormattedDate() }}</p>
+        <p>{{ getFormattedDate() }}</p>
         <ion-item>
-          <ion-select label="Ville" v-model="userChoice" 
-            @ionChange="handleChange(userChoice, cityCoordinates, location)" placeholder="Choisir">
-            <ion-select-option value="Montréal">Montréal</ion-select-option>
-            <ion-select-option value="Québec">Québec</ion-select-option>
+          <ion-select label="City" v-model="userChoice" 
+            @ionChange="handleChange(userChoice, cityCoordinates, location)" placeholder="Pick">
+            <ion-select-option value="Montreal">Montreal</ion-select-option>
+            <ion-select-option value="Quebec">Quebec</ion-select-option>
             <ion-select-option value="Laval">Laval</ion-select-option>
-            <ion-select-option value="Position actuelle">Position actuelle</ion-select-option>
+            <ion-select-option value="My Location">My Location</ion-select-option>
           </ion-select>
         </ion-item>
       </div>
 
-      <div>
+      <div class="dataContainer">
         <h1>{{ userChoice }}</h1>
-        <p>{{ location.lat }}</p>
-        <p>{{ location.long }}</p>
+        <h3>{{ weatherData.temp }}&deg;</h3>
+        <div>
+          <h5>L: {{ weatherData.min_temp }}&deg;</h5>
+          <h5>H: {{ weatherData.max_temp }}&deg;</h5>
+        </div>
+        <h4>{{ weatherData.description }}</h4>
       </div>
     </ion-content>
 
@@ -41,14 +45,35 @@ import {
   IonToolbar, IonCard, IonItem, IonSelect, IonSelectOption
 } from '@ionic/vue';
 import { ref, reactive } from 'vue';
-import { cityCoordinates, location } from '../store.js';
-import { handleChange, getFrenchFormattedDate } from '../utils.js';
+import { cityCoordinates, location, weatherData } from '../store.js';
+import { handleChange, getFormattedDate } from '../utils.js';
 
-const userChoice = reactive('Position actuelle');
+const userChoice = reactive('My Location');
 </script>
 
 <style scoped>
   .div1 {
     text-align: center;
+  }
+
+  .dataContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dataContainer h1 {
+    font-size: 35px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+
+  .dataContainer h3 {
+    font-size: 25px;
+  }
+
+  .dataContainer div {
+    display: flex;
+    gap: 15px;
   }
 </style>

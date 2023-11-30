@@ -4,13 +4,13 @@ export async function handleChange(userChoice, cityCoordinates, location) {
     const { montreal, laval, quebec, currPos } = cityCoordinates;
 
     switch (userChoice) {
-        case "Montréal":
+        case "Montreal":
             location.lat = montreal.lat;
             location.long = montreal.long;
             await fetchWeatherData(location.lat, location.long);
             break;
             
-        case "Québec":
+        case "Quebec":
             location.lat = quebec.lat;
             location.long = quebec.long;
             await fetchWeatherData(location.lat, location.long);
@@ -30,7 +30,7 @@ export async function handleChange(userChoice, cityCoordinates, location) {
     }
 }
 
-export function getFrenchFormattedDate() {
+export function getFormattedDate() {
     const date = new Date();
   
     const options = {
@@ -40,7 +40,7 @@ export function getFrenchFormattedDate() {
       day: 'numeric'
     };
   
-    const formatter = new Intl.DateTimeFormat('fr-FR', options);
+    const formatter = new Intl.DateTimeFormat('en-EN', options);
   
     return formatter.format(date);
 }
@@ -55,7 +55,6 @@ async function fetchWeatherData(latitude, longitude) {
         weatherData.temp = kelvinToCelsius(data.main.temp);
         weatherData.min_temp = kelvinToCelsius(data.main.temp_min);
         weatherData.max_temp = kelvinToCelsius(data.main.temp_max);
-        console.log(weatherData);
     } catch (error) {
         console.error(error.message);
     }
