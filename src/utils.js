@@ -1,4 +1,5 @@
 import { weatherData } from "./store";
+import { Geolocation } from '@capacitor/geolocation';
 
 export async function handleChange(userChoice, cityCoordinates, location) {
     const { montreal, laval, quebec, currPos } = cityCoordinates;
@@ -72,25 +73,11 @@ function kelvinToCelsius(tempKelvin) {
     return roundedCelsius;
 }
 
-export function getUserLocation() {
-    return new Promise((resolve, reject) => {
-        if ('geolocation' in navigator) {
-          navigator.geolocation.getCurrentPosition(
-            function (position) {
-              const userLocation = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
-              };
-              resolve(userLocation);
-            },
-            function (error) {
-              console.error('Error getting user location:', error.message);
-              reject(error);
-            }
-          );
-        } else {
-          console.error('Geolocation is not supported by your browser.');
-          reject(new Error('Geolocation is not supported'));
-        }
-    });
+export async function getUserLocation() {
+  const coordinates = await Geolocation.getCurrentPosition();
+  const userLocation = {
+    latitude: coordinates.coords.latitude,
+    longitude: coordinates.coords.longitude
+  };
+  return userLocation
 }
