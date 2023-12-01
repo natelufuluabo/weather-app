@@ -43,15 +43,21 @@
 <script setup>
 import { 
   IonContent, IonHeader, IonPage, IonTitle, IonImg, onIonViewWillEnter,  
-  IonToolbar, IonCard, IonItem, IonSelect, IonSelectOption
+  IonToolbar, IonCard, IonItem, IonSelect, IonSelectOption, loadingController
 } from '@ionic/vue';
 import { ref, reactive } from 'vue';
 import { cityCoordinates, location, weatherData } from '../store.js';
 import { handleChange, getFormattedDate, getUserLocation, fetchWeatherData } from '../utils.js';
 
 onIonViewWillEnter(async () => {
+  const loading = await loadingController
+    .create({
+      message: 'Please wait...',
+    });
+  await loading.present();
   const userPos = await getUserLocation();
   await fetchWeatherData(userPos.latitude, userPos.longitude);
+  loading.dismiss();
 });
 
 const userChoice = reactive('My Location');
