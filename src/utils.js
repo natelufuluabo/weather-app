@@ -1,34 +1,26 @@
 import { weatherData } from "./store";
 import { Geolocation } from '@capacitor/geolocation';
 
-export async function handleChange(event, userChoice, cityCoordinates, location) {
+export async function handleChange(event, userChoice, cityCoordinates) {
   const { montreal, laval, quebec, currPos } = cityCoordinates;
 
   userChoice.location = event.target.value;
 
   switch (userChoice.location) {
     case "Montreal":
-      location.lat = montreal.lat;
-      location.long = montreal.long;
-      await fetchWeatherData(location.lat, location.long);
+      await fetchWeatherData(montreal.lat, montreal.long);
       break;
         
     case "Quebec":
-      location.lat = quebec.lat;
-      location.long = quebec.long;
-      await fetchWeatherData(location.lat, location.long);
+      await fetchWeatherData(quebec.lat, quebec.long);
       break;
         
     case "Laval":
-      location.lat = laval.lat;
-      location.long = laval.long;
-      await fetchWeatherData(location.lat, location.long);
+      await fetchWeatherData(laval.lat, laval.long);
       break;
         
     default:
-      location.lat = currPos.lat;
-      location.long = currPos.long;
-      await fetchWeatherData(location.lat, location.long);
+      await fetchWeatherData(currPos.lat, currPos.long);
       break;
   }
 }

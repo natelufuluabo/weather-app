@@ -4,11 +4,6 @@ export const userChoice = reactive({
     location: 'My Location'
 });
 
-export const location = reactive({
-    lat: '',
-    long: ''
-});
-
 export const weatherData = reactive({
     icon: '',
     description: '',
