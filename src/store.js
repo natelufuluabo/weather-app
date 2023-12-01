@@ -1,5 +1,9 @@
 import { reactive } from 'vue'
 
+export const userChoice = reactive({
+    location: 'My Location'
+});
+
 export const location = reactive({
     lat: '',
     long: ''
